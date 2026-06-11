@@ -100,28 +100,23 @@ The following Mermaid flow model displays the system interaction topologies acro
 
 ```mermaid
 graph TD
-    classDef client fill:#e0f2fe,stroke:#0284c7,stroke-width:2px;
-    classDef server fill:#f0fdf4,stroke:#16a34a,stroke-width:2px;
-    classDef mservice fill:#faf5ff,stroke:#7c3aed,stroke-width:2px;
-    classDef data fill:#fffbeb,stroke:#d97706,stroke-width:2px;
+    User["👤 Farm Operator"]
+    Router["💻 React App & Map Interface (Google Maps / Tailwind)"]
+    Firebase_Auth["🔐 Firebase Auth"]
 
-    User([👤 Farm Operator]) ::: client
-    Router["💻 React App & Map Interface <br>(Google Maps / Tailwind)"] ::: client
-    Firebase_Auth["🔐 Firebase Auth"] ::: client
-
-    subgraph Backend_Infrastructure [⚡ Python FastAPI Gateway / Express Server]
-        API_Gateway["🔌 FastAPI API Router <br>(main.py / server.ts)"] ::: server
-        Celery_Task["📦 Celery Background Workers"] ::: server
-        Redis_Broker["💾 Redis Cache & Broker"] ::: server
+    subgraph Backend_Infrastructure [⚡ Python FastAPI / Express Server]
+        API_Gateway["🔌 Gateway API Router (main.py / server.ts)"]
+        Celery_Task["📦 Celery Background Workers"]
+        Redis_Broker["💾 Redis Cache & Broker"]
     end
 
     subgraph Partner_Integrations_Layer [🔗 Core Integration Hub]
-        MongoDB_Atlas[("🍃 MongoDB Atlas <br>(Spatial Registry)")] ::: data
-        Firebase_FS[("🔥 Firebase Firestore <br>(App Sessions / Chats)")] ::: data
-        Google_EE["🛰️ Google Earth Engine <br>(Satellite Catalogs / GCS)"] ::: mservice
-        Gemini_Vertex["🧠 Google Gemini API <br>(Vertex AI Generation)"] ::: mservice
-        Arize_Observability["👁️ Arize AI <br>(Model Drift Monitors)"] ::: mservice
-        MCP_Server["🔌 FastMCP Agent Service <br>(mcp_server.py)"] ::: server
+        MongoDB_Atlas[("🍃 MongoDB Atlas (Spatial Registry)")]
+        Firebase_FS[("🔥 Firebase Firestore (App Sessions / Chats)")]
+        Google_EE["🛰️ Google Earth Engine (Satellite Catalogs / GCS)"]
+        Gemini_Vertex["🧠 Google Gemini API (Vertex AI Generation)"]
+        Arize_Observability["👁️ Arize AI (Model Drift Monitors)"]
+        MCP_Server["🔌 FastMCP Agent Service (mcp_server.py)"]
     end
 
     User --> Router
@@ -140,6 +135,19 @@ graph TD
     API_Gateway --> MCP_Server
 
     Celery_Task --> Google_EE
+
+    style User fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+    style Router fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+    style Firebase_Auth fill:#e0f2fe,stroke:#0284c7,stroke-width:2px
+    style API_Gateway fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Celery_Task fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style Redis_Broker fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style MongoDB_Atlas fill:#fffbeb,stroke:#d97706,stroke-width:2px
+    style Firebase_FS fill:#fffbeb,stroke:#d97706,stroke-width:2px
+    style Google_EE fill:#faf5ff,stroke:#7c3aed,stroke-width:2px
+    style Gemini_Vertex fill:#faf5ff,stroke:#7c3aed,stroke-width:2px
+    style Arize_Observability fill:#faf5ff,stroke:#7c3aed,stroke-width:2px
+    style MCP_Server fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
 ```
 
 ---
@@ -334,11 +342,6 @@ We welcome pull requests to the FarmMind AI platform! To contribute:
 This project is licensed under the **MIT License** - see the `LICENSE` file for details.
 
 ---
-
-## 📧 Contact & Technical Support
-- **Project Lead**: Founder - `founder@yalixa.store`
-- **Hackathon Workspace**: Google Cloud Rapid Agent Hackathon (MongoDB Partner Track)
-- **Technical Inquiries**: `support@farmmind.ai`
 
 ---
 *Developed with ❤️ to empower farmers with spatial satellite intelligence.*
