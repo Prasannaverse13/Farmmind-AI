@@ -48,7 +48,7 @@ FarmMind AI employs a robust, modular full-stack architecture built to manage re
   - **MongoDB Atlas** as the master spatial registry storing complex GeoJSON boundaries, historical NDVI sequences, and NPOP audit records.
 
 ### 🧠 Model Hub & AI/ML Pipelines
-- **Generative Intelligence**: Google Gemini models (e.g., Gemini 2.5 Flash / Gemini 2.5 Pro) executing automated remote sensing translations, anomaly analyses, and agronomic chatbot responses.
+- **Generative Intelligence**: Google Gemini models (Gemini 3) executing automated remote sensing translations, anomaly analyses, and agronomic chatbot responses.
 - **Deep Learning Vision**: **TensorFlow** & **PyTorch** executing deep neural network segmentations (U-Net architectures) and temporal regressors (multi-variable XGBoost/LSTMs) for yield estimation and soil hydration analysis.
 - **Observability**: **Arize AI** for continuous training logs, data drift triggers, and structural embedding monitors.
 - **Agent Interoperability**: **Model Context Protocol (MCP)** hosting standard endpoints for bidirectional AI model and backend database operations.
