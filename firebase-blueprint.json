@@ -1,0 +1,36 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user account details, display names, and profile configuration mapping.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The unique Firebase Authentication UID."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The verified email address of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Personalized agricultural scout or operator name."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Standard temporal timestamp when security profile was registered."
+        }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User account configurations."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Secure Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidUserProfile(data) {
+      return data.uid is string && data.uid.size() <= 128
+        && data.email is string && data.email.size() <= 256
+        && data.uid == request.auth.uid
+        && (!data.keys().hasAny(['displayName']) || (data.displayName is string && data.displayName.size() <= 128))
+        && (!data.keys().hasAny(['createdAt']) || (data.createdAt is string && data.createdAt.size() <= 64));
+    }
+
+    // Users Collection Hardening
+    match /users/{userId} {
+      allow get, delete: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn() && request.auth.uid == userId
+                    && isValidUserProfile(incoming());
+      allow update: if isSignedIn() && request.auth.uid == userId
+                    && isValidUserProfile(incoming())
+                    && incoming().uid == existing().uid
+                    && incoming().email == existing().email;
+    }
+
+    // Saved Locations Collection
+    match /saved_locations/{docId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}
